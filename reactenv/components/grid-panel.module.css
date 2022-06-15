@@ -1,0 +1,38 @@
+.panel {
+  margin-left: 0.5rem;
+  max-width: 80%;
+  height: 71.8vh;
+}
+
+.row {
+  display: flex;
+}
+
+.col {
+    margin-left: 1px;
+}
+
+.cell {
+  border-radius: 5px;
+}
+
+.cell.disabled {
+    background-color: gray;
+    cursor: default;
+}
+
+.cell.selected {
+    background-color: green;
+    cursor: pointer;
+}
+
+.cell.unselected {
+    background-color: white;
+    cursor: pointer;
+}
+
+.cell.playing {
+    background-color: yellow;
+    cursor: pointer;
+}
+
