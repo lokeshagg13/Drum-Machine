@@ -1,10 +1,12 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 
 import BeatPlayerContext from "../store/beat-player-context";
 import constants from "../store/constants";
+import ModalContext from "../store/modal-context";
 import classes from "./control-panel.module.css";
 
-function ControlPanel(props) {
+function ControlPanel() {
+  const modalCtx = useContext(ModalContext);
   const beatPlayerCtx = useContext(BeatPlayerContext);
 
   return (
@@ -33,7 +35,7 @@ function ControlPanel(props) {
           <button
             type="button"
             id="bpm-increment-btn"
-            disabled={(beatPlayerCtx.bpm >= constants.MAX_BPM ? true : false)}
+            disabled={beatPlayerCtx.bpm >= constants.MAX_BPM ? true : false}
             onClick={() => beatPlayerCtx.incrementBPM()}
           >
             + {constants.BPM_INCREMENT}
@@ -41,7 +43,7 @@ function ControlPanel(props) {
           <button
             type="button"
             id="bpm-decrement-btn"
-            disabled={(beatPlayerCtx.bpm <= constants.MIN_BPM ? true : false)}
+            disabled={beatPlayerCtx.bpm <= constants.MIN_BPM ? true : false}
             onClick={() => beatPlayerCtx.decrementBPM()}
           >
             - {constants.BPM_DECREMENT}
@@ -62,7 +64,9 @@ function ControlPanel(props) {
           <button
             type="button"
             id="beat-increment-btn"
-            disabled={(beatPlayerCtx.numberOfBeats >= constants.MAX_BEATS ? true : false)}
+            disabled={
+              beatPlayerCtx.numberOfBeats >= constants.MAX_BEATS ? true : false
+            }
             onClick={() => beatPlayerCtx.incrementBeats()}
           >
             + 1
@@ -70,7 +74,9 @@ function ControlPanel(props) {
           <button
             type="button"
             id="beat-decrement-btn"
-            disabled={(beatPlayerCtx.numberOfBeats <= constants.MIN_BEATS ? true : false)}
+            disabled={
+              beatPlayerCtx.numberOfBeats <= constants.MIN_BEATS ? true : false
+            }
             onClick={() => beatPlayerCtx.decrementBeats()}
           >
             - 1
@@ -78,7 +84,11 @@ function ControlPanel(props) {
         </div>
       </div>
       <div className={classes.saveLoad}>
-        <button type="button" id="save-btn">
+        <button
+          type="button"
+          id="save-btn"
+          onClick={() => modalCtx.showModal("save")}
+        >
           Save Beat
         </button>
         <button type="button" id="load-btn">

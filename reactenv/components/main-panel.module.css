@@ -6,3 +6,13 @@
 .actions {
   display: flex;
 }
+
+.backdrop {
+  position: fixed;
+  z-index: 6;
+  background-color: rgba(0, 0, 0, 0.75);
+  width: 100%;
+  left: 0;
+  height: 100%;
+  top: 0;
+}
