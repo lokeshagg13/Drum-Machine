@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 
 import constants from "./constants";
+import instrumentsList from "../instruments.json";
 
 const BeatPlayerContext = createContext({
   numberOfInstruments: 6,
@@ -8,7 +9,7 @@ const BeatPlayerContext = createContext({
   bpm: 240,
   isPlaying: true,
   currentGrid: new Array(6).fill(new Array(8).fill("unselected")),
-  activeInstruments: new Array(6).fill(true),
+  instruments: null,
   activeBeat: 1,
   moveToNextBeat: () => {},
   toggleGridCellSelection: (rowIdx, colIdx) => {},
@@ -19,8 +20,8 @@ const BeatPlayerContext = createContext({
   decrementBPM: () => {},
   incrementBeats: () => {},
   decrementBeats: () => {},
-  // enableInstrument: (idx) => {},
-  // disableInstrument: (idx) => {},
+  enableInstrument: (id) => {},
+  disableInstrument: (id) => {},
 });
 
 export function BeatPlayerContextProvider(props) {
@@ -29,8 +30,12 @@ export function BeatPlayerContextProvider(props) {
   const [bpm, setBPM] = useState(240);
   const [isPlaying, setIsPlaying] = useState(true);
   const [activeBeat, setActiveBeat] = useState(1);
-  const [activeInstruments, setActiveInstruments] = useState(() => {
-    return new Array(numberOfInstruments).fill(true);
+  const [instruments, setInstruments] = useState(() => {
+    return instrumentsList.map((instrument) => ({
+      id: instrument.instrument_id,
+      name: instrument.instrument_name,
+      active: true,
+    }));
   });
   const [currentGrid, setCurrentGrid] = useState(() => {
     return new Array(numberOfInstruments).fill(
@@ -49,7 +54,8 @@ export function BeatPlayerContextProvider(props) {
         if (rowIdx === rIdx) {
           return row.map((col, cIdx) => {
             if (colIdx === cIdx) {
-              if (col === "selected") return "unselected";
+              if(instruments[rowIdx].active === false) return "disabled"
+              else if (col === "selected") return "unselected";
               else if (col === "unselected") return "selected";
               else if (col === "playing") return "unselected";
               else if (col === "current") return "selected";
@@ -114,6 +120,46 @@ export function BeatPlayerContextProvider(props) {
     }
   }
 
+  function disableInstrument(id) {
+    setInstruments((instruments) =>
+      instruments.map((instrument) => {
+        if (instrument.id === id) instrument.active = false;
+        return instrument
+      })
+    );
+
+    setCurrentGrid((currentGrid) =>
+      currentGrid.map((row, rIdx) => {
+        if (id - 1 === rIdx) {
+          return row.map((col) => {
+            if (col === "selected" || col === "playing") return "disabled";
+            else return col;
+          });
+        } else return row;
+      })
+    );
+  }
+
+  function enableInstrument(id) {
+    setInstruments((instruments) =>
+      instruments.map((instrument) => {
+        if (instrument.id === id) instrument.active = true;
+        return instrument
+      })
+    );
+
+    setCurrentGrid((currentGrid) =>
+      currentGrid.map((row, rIdx) => {
+        if (id - 1 === rIdx) {
+          return row.map((col) => {
+            if (col === "disabled") return "selected";
+            else return col;
+          });
+        } else return row;
+      })
+    );
+  }
+
   function clearGrid() {
     setCurrentGrid((currentGrid) =>
       currentGrid.map((row) => {
@@ -132,7 +178,7 @@ export function BeatPlayerContextProvider(props) {
     bpm,
     isPlaying,
     currentGrid,
-    activeInstruments,
+    instruments,
     activeBeat,
     moveToNextBeat,
     toggleGridCellSelection,
@@ -142,6 +188,8 @@ export function BeatPlayerContextProvider(props) {
     decrementBPM,
     incrementBeats,
     decrementBeats,
+    enableInstrument,
+    disableInstrument,
     clearGrid,
   };
 

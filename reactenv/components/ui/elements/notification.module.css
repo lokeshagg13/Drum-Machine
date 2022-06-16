@@ -1,0 +1,25 @@
+.error {
+  color: #d8000c;
+  background-color: #ffd2d2;
+}
+
+.success {
+  color: #4f8a10;
+  background-color: #dff2bf;
+}
+
+.info {
+  color: #00529b;
+  background-color: #bde5f8;
+}
+
+.notification {
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.notification svg {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
