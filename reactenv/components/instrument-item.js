@@ -9,7 +9,6 @@ function InstrumentItem(props) {
   const beatPlayerCtx = useContext(BeatPlayerContext);
   const active = beatPlayerCtx.instruments[id - 1].active;
 
-  console.log(`${id} ${active}`)
   function toggleInstrumentStatus(event) {
     if (active) beatPlayerCtx.disableInstrument(id);
     else beatPlayerCtx.enableInstrument(id);
