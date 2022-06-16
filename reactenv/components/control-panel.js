@@ -1,45 +1,83 @@
+import { useContext, useRef } from "react";
+
+import BeatPlayerContext from "../store/beat-player-context";
+import constants from "../store/constants";
 import classes from "./control-panel.module.css";
 
 function ControlPanel(props) {
+  const beatPlayerCtx = useContext(BeatPlayerContext);
+
   return (
     <div className={classes.controls}>
       <div className={classes.play}>
-        <button type="button" id="play-pause-btn">
-          Pause
+        <button
+          type="button"
+          id="play-pause-btn"
+          onClick={() => beatPlayerCtx.togglePlay()}
+        >
+          {beatPlayerCtx.isPlaying ? "Pause" : "Play"}
         </button>
-        <h5>Playing</h5>
+        <h5>{beatPlayerCtx.isPlaying ? "Playing" : "Paused"}</h5>
       </div>
       <div className={classes.bpm}>
         <div className={classes.display}>
           <div className={classes.label}>Beats per minute</div>
-          <input type="text" value="240" className={classes.input} disabled />
+          <input
+            type="text"
+            value={beatPlayerCtx.bpm}
+            className={classes.input}
+            disabled
+          />
         </div>
         <div className={classes.bpmControls}>
-          <button type="button" id="bpm-increment-btn">
-            + 5
+          <button
+            type="button"
+            id="bpm-increment-btn"
+            disabled={(beatPlayerCtx.bpm >= constants.MAX_BPM ? true : false)}
+            onClick={() => beatPlayerCtx.incrementBPM()}
+          >
+            + {constants.BPM_INCREMENT}
           </button>
-          <button type="button" id="bpm-decrement-btn">
-            - 5
+          <button
+            type="button"
+            id="bpm-decrement-btn"
+            disabled={(beatPlayerCtx.bpm <= constants.MIN_BPM ? true : false)}
+            onClick={() => beatPlayerCtx.decrementBPM()}
+          >
+            - {constants.BPM_DECREMENT}
           </button>
         </div>
       </div>
-      <div className={classes.control}>
-        <div>
-          <div>
-            <div>Number of Beats</div>
-            <div></div>
-          </div>
-          <div>
-            <button type="button" id="beats-increment-btn">
-              + 1
-            </button>
-            <button type="button" id="beats-decrement-btn">
-              - 1
-            </button>
-          </div>
+      <div className={classes.beats}>
+        <div className={classes.display}>
+          <div className={classes.label}>Number of Beats</div>
+          <input
+            type="text"
+            value={beatPlayerCtx.numberOfBeats}
+            className={classes.input}
+            disabled
+          />
+        </div>
+        <div className={classes.beatControls}>
+          <button
+            type="button"
+            id="beat-increment-btn"
+            disabled={(beatPlayerCtx.numberOfBeats >= constants.MAX_BEATS ? true : false)}
+            onClick={() => beatPlayerCtx.incrementBeats()}
+          >
+            + 1
+          </button>
+          <button
+            type="button"
+            id="beat-decrement-btn"
+            disabled={(beatPlayerCtx.numberOfBeats <= constants.MIN_BEATS ? true : false)}
+            onClick={() => beatPlayerCtx.decrementBeats()}
+          >
+            - 1
+          </button>
         </div>
       </div>
-      <div className={classes.control}>
+      <div className={classes.saveLoad}>
         <button type="button" id="save-btn">
           Save Beat
         </button>
@@ -47,11 +85,14 @@ function ControlPanel(props) {
           Load Beat
         </button>
       </div>
-      <div className={classes.control}>
-        <button type="button" id="clear-board">
-          Clear Board
-        </button>
-      </div>
+      <button
+        type="button"
+        id="clear-board"
+        className={classes.clear}
+        onClick={() => beatPlayerCtx.clearGrid()}
+      >
+        Clear Board
+      </button>
     </div>
   );
 }

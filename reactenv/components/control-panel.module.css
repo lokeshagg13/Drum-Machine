@@ -34,7 +34,7 @@
   flex-direction: row;
 }
 
-.display {
+.bpm .display {
   font-size: 1rem;
   font-weight: bold;
   border: 1px solid;
@@ -42,11 +42,11 @@
   text-align: center;
 }
 
-.label {
+.bpm .label {
   margin: 0rem 0.5rem 0.5rem;
 }
 
-.input {
+.bpm .input {
   width: 3rem;
   text-align: center;
   background-color: white;
@@ -58,7 +58,7 @@
 .bpmControls {
   margin-left: 0.5rem;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-direction: column;
 }
 
@@ -70,9 +70,108 @@
   background-color: #9f5ccc;
   border: 1px solid #9f5ccc;
   border-radius: 4px;
+  height: 2.2rem;
 }
 
 .bpmControls button:hover {
   background-color: #873abb;
   border-color: #873abb;
 }
+
+.bpmControls button:disabled {
+  background-color: gray;
+}
+
+.beats {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+.beats .display {
+  font-size: 1rem;
+  font-weight: bold;
+  border: 1px solid;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.beats .label {
+  margin: 0rem 0.5rem 0.5rem;
+}
+
+.beats .input {
+  width: 3rem;
+  text-align: center;
+  background-color: white;
+  border: 2px solid;
+  margin: 0rem 0.5rem 0.5rem;
+  font-weight: bold;
+}
+
+.beatControls {
+  margin-left: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.beatControls button {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #9f5ccc;
+  border: 1px solid #9f5ccc;
+  border-radius: 4px;
+  height: 2.2rem;
+}
+
+.beatControls button:hover {
+  background-color: #873abb;
+  border-color: #873abb;
+}
+
+.beatControls button:disabled {
+  background-color: gray;
+}
+
+.saveLoad {
+  margin-left: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.saveLoad button {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #9f5ccc;
+  border: 1px solid #9f5ccc;
+  border-radius: 4px;
+  height: 2.2rem;
+}
+
+.saveLoad button:hover {
+  background-color: #873abb;
+  border-color: #873abb;
+}
+
+.clear {
+    cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #9f5ccc;
+  border: 1px solid #9f5ccc;
+  border-radius: 4px;
+  height: 4.5rem;
+  margin-right: 2rem;
+}
+
+.clear:hover {
+    background-color: #873abb;
+    border-color: #873abb;
+  }

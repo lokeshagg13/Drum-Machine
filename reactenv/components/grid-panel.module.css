@@ -1,6 +1,6 @@
 .panel {
   margin-left: 0.5rem;
-  max-width: 80%;
+  width: 80%;
   height: 71.8vh;
 }
 
@@ -9,7 +9,7 @@
 }
 
 .col {
-    margin-left: 1px;
+  margin-left: 1px;
 }
 
 .cell {
@@ -17,22 +17,26 @@
 }
 
 .cell.disabled {
-    background-color: gray;
-    cursor: default;
+  background-color: gray;
+  cursor: default;
 }
 
 .cell.selected {
-    background-color: green;
-    cursor: pointer;
+  background-color: lightgreen;
+  cursor: pointer;
 }
 
 .cell.unselected {
-    background-color: white;
-    cursor: pointer;
+  background-color: white;
+  cursor: pointer;
 }
 
 .cell.playing {
-    background-color: yellow;
-    cursor: pointer;
+  background-color: green;
+  cursor: pointer;
 }
 
+.cell.current {
+  background-color: yellow;
+  cursor: default;
+}
