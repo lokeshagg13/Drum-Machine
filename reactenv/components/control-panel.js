@@ -91,7 +91,11 @@ function ControlPanel() {
         >
           Save Beat
         </button>
-        <button type="button" id="load-btn">
+        <button
+          type="button"
+          id="load-btn"
+          onClick={() => modalCtx.showModal("load")}
+        >
           Load Beat
         </button>
       </div>

@@ -22,6 +22,7 @@ const BeatPlayerContext = createContext({
   decrementBeats: () => {},
   enableInstrument: (id) => {},
   disableInstrument: (id) => {},
+  loadBeat: (bpm, numberOfBeats, numberOfInstruments, instruments, grid) => {},
 });
 
 export function BeatPlayerContextProvider(props) {
@@ -54,7 +55,7 @@ export function BeatPlayerContextProvider(props) {
         if (rowIdx === rIdx) {
           return row.map((col, cIdx) => {
             if (colIdx === cIdx) {
-              if(instruments[rowIdx].active === false) return "disabled"
+              if (instruments[rowIdx].active === false) return "disabled";
               else if (col === "selected") return "unselected";
               else if (col === "unselected") return "selected";
               else if (col === "playing") return "unselected";
@@ -124,7 +125,7 @@ export function BeatPlayerContextProvider(props) {
     setInstruments((instruments) =>
       instruments.map((instrument) => {
         if (instrument.id === id) instrument.active = false;
-        return instrument
+        return instrument;
       })
     );
 
@@ -144,7 +145,7 @@ export function BeatPlayerContextProvider(props) {
     setInstruments((instruments) =>
       instruments.map((instrument) => {
         if (instrument.id === id) instrument.active = true;
-        return instrument
+        return instrument;
       })
     );
 
@@ -172,6 +173,22 @@ export function BeatPlayerContextProvider(props) {
     );
   }
 
+  function loadBeat(
+    bpm,
+    numberOfBeats,
+    numberOfInstruments,
+    instruments,
+    grid
+  ) {
+    setBPM(bpm);
+    setNumberOfBeats(numberOfBeats);
+    setNumberOfInstruments(numberOfInstruments);
+    setInstruments(instruments);
+    setCurrentGrid(grid);
+    setIsPlaying(true);
+    setActiveBeat(1);
+  }
+
   const currentBeatPlayerContext = {
     numberOfInstruments,
     numberOfBeats,
@@ -191,6 +208,7 @@ export function BeatPlayerContextProvider(props) {
     enableInstrument,
     disableInstrument,
     clearGrid,
+    loadBeat,
   };
 
   return (

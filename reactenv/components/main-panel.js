@@ -7,6 +7,7 @@ import ModalContext from "../store/modal-context";
 import SaveBeatModal from "./modals/save-beat-modals";
 
 import classes from "./main-panel.module.css";
+import LoadBeatModal from "./modals/load-beat-modal";
 
 function MainPanel() {
   const modalCtx = useContext(ModalContext);
@@ -25,6 +26,7 @@ function MainPanel() {
           <div className={classes.backdrop} onClick={modalCtx.hideModals} />
         )}
         {modalCtx.modalType === "save" && <SaveBeatModal />}
+        {modalCtx.modalType === "load" && <LoadBeatModal />}
       </div>
     </Fragment>
   );

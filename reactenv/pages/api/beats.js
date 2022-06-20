@@ -3,7 +3,8 @@ import beatModel from "../../models/beat";
 import constants from "../../store/constants";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST" && req.method !== "GET") return;
+  if (req.method !== "POST" && req.method !== "GET" && req.method !== "DELETE")
+    return;
 
   let connection;
   try {
@@ -69,7 +70,44 @@ export default async function handler(req, res) {
         throw new Error("Error saving the beat");
       }
       await connection.disconnect();
-      return res.status(200).json({ message: "Saved successfully" });
+      return res.status(201).json({ message: "Saved successfully" });
+    } catch (error) {
+      await connection.disconnect();
+      return res.status(500).json({ message: error.message });
+    }
+  }
+
+  if (req.method === "GET") {
+    try {
+      const beatsFound = await beatModel.find({});
+      if (!Array.isArray(beatsFound) || beatsFound.length === 0)
+        throw new Error("No beats exist");
+
+      await connection.disconnect();
+      return res
+        .status(200)
+        .json({ beats: beatsFound, message: "Saved successfully" });
+    } catch (error) {
+      await connection.disconnect();
+      return res.status(500).json({ message: error.message });
+    }
+  }
+
+  if (req.method === "DELETE") {
+    try {
+      const { name } = req.body;
+      const searchedBeat = await beatModel.findOne({ name: name });
+      if (!searchedBeat) throw new Error("Beat name not found");
+
+      try {
+        await beatModel.deleteOne({
+          name: name,
+        });
+      } catch (error) {
+        throw new Error("Error deleting the beat");
+      }
+      await connection.disconnect();
+      return res.status(200).json({ message: "Deleted successfully" });
     } catch (error) {
       await connection.disconnect();
       return res.status(500).json({ message: error.message });
