@@ -10,19 +10,19 @@ const instruments = [
     "instrument_id": 1,
     "instrument_name": "Hi Hat",
     "instrument_image": hiHatImage,
-    "sound_file_path": "/sounds/hi hat.wav"
+    "sound_file_path": "/sounds/hi hat.WAV"
   },
   {
     "instrument_id": 2,
     "instrument_name": "Snare",
     "instrument_image": snareImage,
-    "sound_file_path": "/sounds/snare.wav"
+    "sound_file_path": "/sounds/snare.WAV"
   },
   {
     "instrument_id": 3,
     "instrument_name": "Bass Drum",
     "instrument_image": kickImage,
-    "sound_file_path": "/sounds/kick.wav"
+    "sound_file_path": "/sounds/kick.WAV"
   },
   {
     "instrument_id": 4,
@@ -40,7 +40,7 @@ const instruments = [
     "instrument_id": 6,
     "instrument_name": "Floor Tom",
     "instrument_image": tomImage,
-    "sound_file_path": "/sounds/tom.wav"
+    "sound_file_path": "/sounds/tom.WAV"
   }
 ];
 

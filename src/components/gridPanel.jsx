@@ -1,10 +1,19 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useRef } from "react";
 import instrumentsList from "../store/instruments";
 import BeatPlayerContext from "../store/beatPlayerContext";
 import "./gridPanel.css";
 
 function GridPanel() {
   const beatPlayerCtx = useContext(BeatPlayerContext);
+  const audioPlayers = useRef(
+    instrumentsList.map((instrument) => {
+      const audio = new Audio(
+        `${process.env.PUBLIC_URL}${instrument.sound_file_path}`
+      );
+      audio.preload = "auto";
+      return audio;
+    })
+  ).current;
 
   useEffect(() => {
     const playNotes = () => {
@@ -12,17 +21,9 @@ function GridPanel() {
         if (
           beatPlayerCtx.currentGrid[i][beatPlayerCtx.activeBeat] === "selected"
         ) {
-          const audio = new Audio(
-            `${process.env.PUBLIC_URL}${instrumentsList[i].sound_file_path}`
-          );
-          audio.play().then(() => {
-            // Clean up when done
-            audio.addEventListener("ended", () => {
-              audio.pause();
-              audio.src = "";
-              audio.remove();
-            });
-          });
+          const player = audioPlayers[i];
+          player.currentTime = 0;
+          player.play();
         }
       }
     };
@@ -41,6 +42,7 @@ function GridPanel() {
     beatPlayerCtx.activeBeat,
     beatPlayerCtx.isPlaying,
     beatPlayerCtx.bpm,
+    audioPlayers
   ]);
 
   return (
