@@ -1,6 +1,6 @@
 {
   "name": "drum-machine",
-  "homepage": "https://lokeshagg13.github.io/drum-machine",
+  "homepage": "https://lokeshagg13.github.io/Drum-Machine",
   "main": "src/index.jsx",
   "version": "0.1.0",
   "dependencies": {
