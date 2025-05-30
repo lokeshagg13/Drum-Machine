@@ -12,9 +12,17 @@ function GridPanel() {
         if (
           beatPlayerCtx.currentGrid[i][beatPlayerCtx.activeBeat] === "selected"
         ) {
-          new Audio(
+          const audio = new Audio(
             `${process.env.PUBLIC_URL}${instrumentsList[i].sound_file_path}`
-          ).play();
+          );
+          audio.play().then(() => {
+            // Clean up when done
+            audio.addEventListener("ended", () => {
+              audio.pause();
+              audio.src = "";
+              audio.remove();
+            });
+          });
         }
       }
     };
@@ -28,7 +36,12 @@ function GridPanel() {
       }, beatLength);
       return () => clearInterval(interval);
     }
-  }, [beatPlayerCtx, beatPlayerCtx.activeBeat, beatPlayerCtx.isPlaying, beatPlayerCtx.bpm]);
+  }, [
+    beatPlayerCtx,
+    beatPlayerCtx.activeBeat,
+    beatPlayerCtx.isPlaying,
+    beatPlayerCtx.bpm,
+  ]);
 
   return (
     <div

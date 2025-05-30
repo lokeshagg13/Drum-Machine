@@ -60,7 +60,6 @@ function generateRandomBeat() {
         constants.SELECTED_CELL_PERCENTAGE_RANGE[0],
         constants.SELECTED_CELL_PERCENTAGE_RANGE[1]
     );
-    console.log(randomBPM, randomNumBeats, randomInstruments, randomBeatGrid)
     return { randomBPM, randomNumBeats, randomInstruments, randomBeatGrid }
 }
 
