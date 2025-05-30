@@ -40,7 +40,7 @@ const instruments = [
     "instrument_id": 6,
     "instrument_name": "Floor Tom",
     "instrument_image": tomImage,
-    "sound_file_path": "/sounds/tom.wav"
+    "sound_file_path": "/sounds/floor tom.wav"
   }
 ];
 
