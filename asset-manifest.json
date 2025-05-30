@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/drum-machine/static/css/main.29d5caf7.css",
-    "main.js": "/drum-machine/static/js/main.bb3caf05.js",
-    "static/media/header.png": "/drum-machine/static/media/header.c2572a916dc79ed563e7.png",
-    "static/media/tom.png": "/drum-machine/static/media/tom.98564a690931be7ea9b3.png",
-    "static/media/snare.png": "/drum-machine/static/media/snare.c74c1ff389d70587d06a.png",
-    "static/media/crash.png": "/drum-machine/static/media/crash.35f9ab5a7e0d888e7cd9.png",
-    "static/media/kick.png": "/drum-machine/static/media/kick.1d9f7d8d8c946b16c66e.png",
-    "static/media/hi-hat.png": "/drum-machine/static/media/hi-hat.ae73dfa64dcf7d6756da.png",
-    "static/media/clap.png": "/drum-machine/static/media/clap.9928eb03f1e911b793ef.png",
-    "index.html": "/drum-machine/index.html",
-    "main.29d5caf7.css.map": "/drum-machine/static/css/main.29d5caf7.css.map",
-    "main.bb3caf05.js.map": "/drum-machine/static/js/main.bb3caf05.js.map"
+    "main.css": "/Drum-Machine/static/css/main.29d5caf7.css",
+    "main.js": "/Drum-Machine/static/js/main.f6c6c9f5.js",
+    "static/media/header.png": "/Drum-Machine/static/media/header.c2572a916dc79ed563e7.png",
+    "static/media/tom.png": "/Drum-Machine/static/media/tom.98564a690931be7ea9b3.png",
+    "static/media/snare.png": "/Drum-Machine/static/media/snare.c74c1ff389d70587d06a.png",
+    "static/media/crash.png": "/Drum-Machine/static/media/crash.35f9ab5a7e0d888e7cd9.png",
+    "static/media/kick.png": "/Drum-Machine/static/media/kick.1d9f7d8d8c946b16c66e.png",
+    "static/media/hi-hat.png": "/Drum-Machine/static/media/hi-hat.ae73dfa64dcf7d6756da.png",
+    "static/media/clap.png": "/Drum-Machine/static/media/clap.9928eb03f1e911b793ef.png",
+    "index.html": "/Drum-Machine/index.html",
+    "main.29d5caf7.css.map": "/Drum-Machine/static/css/main.29d5caf7.css.map",
+    "main.f6c6c9f5.js.map": "/Drum-Machine/static/js/main.f6c6c9f5.js.map"
   },
   "entrypoints": [
     "static/css/main.29d5caf7.css",
-    "static/js/main.bb3caf05.js"
+    "static/js/main.f6c6c9f5.js"
   ]
 }
