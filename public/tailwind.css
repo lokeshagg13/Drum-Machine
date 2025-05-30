@@ -1082,6 +1082,79 @@ body {
 .App-link {
   color: #61dafb;
 }
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 12px;
+  padding: 1rem 1rem;
+  max-width: 400px;
+  height: fit-content;
+  z-index: 10;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-family: "Roboto", sans-serif;
+  animation: fadeIn 0.4s ease-in-out;
+  text-align: center;
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -55%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.modal .content {
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.modal .actions {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal .actions .confirmBtn,
+.modal .actions .cancelBtn {
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.modal .actions .confirmBtn {
+  background-color: #5c1d91;
+  color: #fff;
+  border: none;
+}
+
+.modal .actions .confirmBtn:hover {
+  background-color: #7c34c7;
+}
+
+.modal .actions .cancelBtn {
+  background-color: #f0f0f0;
+  color: #5c1d91;
+  border: 1px solid #ccc;
+}
+
+.modal .actions .cancelBtn:hover {
+  background-color: #e9e9e9;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

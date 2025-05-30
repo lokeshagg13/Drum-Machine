@@ -1,29 +1,52 @@
-.controls {
+.control-panel {
   display: flex;
   justify-content: center;
   padding: 2rem;
 }
 
 /* BPM and Beats input groups */
-.input-group {
+.control-panel .input-group {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.input-label {
+.control-panel .input-label {
   margin-bottom: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
 }
 
-.input-wrapper {
+.control-panel .input-label .icon svg {
+  width: 1em;
+  height: 1em;
+  stroke: white;
+  fill: #873abb;
+  margin-left: -5px;
+  margin-top: -10px;
+}
+
+#bpm-tooltip,
+#beats-tooltip {
+  white-space: nowrap;
+}
+
+#bpm-tooltip .tooltip-inner,
+#beats-tooltip .tooltip-inner {
+  max-width: none !important;
+  width: fit-content;
+  overflow: visible;
+}
+
+.control-panel .input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.input-wrapper input {
+.control-panel .input-wrapper input {
   width: 8rem;
   padding: 0.5rem 2rem;
   text-align: center;
@@ -35,7 +58,7 @@
   pointer-events: none;
 }
 
-.input-wrapper button {
+.control-panel .input-wrapper button {
   position: absolute;
   height: 100%;
   width: 2rem;
@@ -48,22 +71,22 @@
   transition: background 0.3s ease;
 }
 
-.input-wrapper button:hover {
+.control-panel .input-wrapper button:hover {
   background: #873abb;
 }
 
-.input-wrapper .decrement {
+.control-panel .input-wrapper .decrement {
   left: 0;
   border-radius: 6px 0 0 6px;
 }
 
-.input-wrapper .increment {
+.control-panel .input-wrapper .increment {
   right: 0;
   border-radius: 0 6px 6px 0;
 }
 
 /* Inputs container for bpm + beats */
-.inputs {
+.control-panel .inputs {
   display: flex;
   flex-direction: row;
   gap: 2rem;
@@ -71,14 +94,14 @@
 }
 
 /* 2x2 Button grid: Play/Pause, Save, Load, Clear */
-.button-grid {
+.control-panel .button-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(120px, 180px));
   gap: 1rem;
   justify-content: center;
 }
 
-.button-grid button {
+.control-panel .button-grid button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,17 +115,17 @@
   transition: background 0.3s ease;
 }
 
-.button-grid button:hover {
+.control-panel .button-grid button:hover {
   background-color: #873abb;
 }
 
-.button-grid .button-text {
+.control-panel .button-grid .button-text {
   font-size: 1rem;
   font-weight: bold;
 }
 
 /* Wrapper for side-by-side layout on large screens */
-.controls-inner {
+.control-panel .controls-inner {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -112,24 +135,24 @@
 
 /* Tablet and larger: side-by-side layout */
 @media (min-width: 768px) {
-  .controls-inner {
+  .control-panel .controls-inner {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
 
-  .inputs,
-  .button-grid {
+  .control-panel .inputs,
+  .control-panel .button-grid {
     flex: 1;
   }
 
-  .inputs {
+  .control-panel .inputs {
     max-width: 400px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .button-grid {
+  .control-panel .button-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(120px, 180px));
     gap: 1rem;
@@ -138,7 +161,7 @@
 }
 
 @media (min-width: 1024px) {
-  .button-grid {
+  .control-panel .button-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(120px, 180px));
     gap: 1rem;

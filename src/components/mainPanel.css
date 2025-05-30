@@ -1,5 +1,5 @@
 @media (min-width: 768px) {
-  .main {
+  .main-panel {
     background: rgba(0, 0, 0, 0.08);
     padding: 13px;
     border-radius: 12px;
@@ -7,7 +7,7 @@
   }
 }
 
-.actions {
+.upper-panels {
   display: flex;
   gap: 0.4rem;
 }

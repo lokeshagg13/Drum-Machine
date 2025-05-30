@@ -19,8 +19,8 @@ function InstrumentItem(props) {
       className={`instrument ${active ? "enabled" : "disabled"}`}
       onClick={toggleInstrumentStatus}
     >
-      <div className="name">{name}</div>
-      <div className="image">
+      <div className="instrument-name">{name}</div>
+      <div className="instrument-image">
         <img src={image} alt="" width="32" height="32" />
       </div>
     </button>

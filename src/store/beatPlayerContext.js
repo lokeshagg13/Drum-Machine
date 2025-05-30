@@ -16,6 +16,7 @@ const BeatPlayerContext = createContext({
   changeGridCellBasedOnActiveBeat: () => { },
   togglePlay: () => { },
   clearGrid: () => { },
+  isBeatGridEmpty: (considerDisabled) => { },
   incrementBPM: () => { },
   decrementBPM: () => { },
   incrementBeats: () => { },
@@ -168,10 +169,25 @@ export function BeatPlayerContextProvider(props) {
         return row.map((col) => {
           if (col === "selected") return "unselected";
           else if (col === "playing") return "current";
+          else if (col === "disabled") return "unselected";
           else return col;
         });
       })
     );
+  }
+
+  function isBeatGridEmpty(considerDisabled = false) {
+    for (let i = 0; i < currentGrid.length; i++) {
+      for (let j = 0; j < currentGrid[0].length; j++) {
+        if (currentGrid[i][j] === "selected" || currentGrid[i][j] === "playing") {
+          return false;
+        }
+        if (considerDisabled && currentGrid[i][j] === "disabled") {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   function loadBeat(
@@ -209,6 +225,7 @@ export function BeatPlayerContextProvider(props) {
     enableInstrument,
     disableInstrument,
     clearGrid,
+    isBeatGridEmpty,
     loadBeat,
   };
 

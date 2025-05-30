@@ -1,7 +1,7 @@
 .grid-panel {
   display: grid;
   width: 80%;
-  height: 60vh;
+  min-height: 60vh;
   row-gap: 0.4rem;
   column-gap: 1px;
 }
@@ -17,6 +17,7 @@
 .grid-cell.disabled {
   background-color: gray;
   cursor: default;
+  border-right: 4px solid #010;
 }
 
 .grid-cell.selected {

@@ -20,17 +20,17 @@
   transform: scale(1.02);
 }
 
-.enabled {
+.instrument.enabled {
   background-color: #7fffd4;
   color: #000;
 }
 
-.disabled {
+.instrument.disabled {
   background-color: #aaa;
   color: #fff;
 }
 
-.name {
+.instrument-name {
   font-size: 1rem;
   font-weight: 600;
   flex: 1;
@@ -41,7 +41,7 @@
   white-space: nowrap;
 }
 
-.image img {
+.instrument-image img {
   width: 36px;
   height: 36px;
   object-fit: contain;
@@ -58,15 +58,28 @@
     padding: 0.5rem;
   }
 
-  .name {
+  .instrument-name {
     margin: 0.5rem 0 0;
-    font-size: 0.9rem;
     text-wrap: auto;
     text-align: center;
   }
 
-  .image img {
+  .instrument-image img {
     width: 32px;
     height: 32px;
   }
 }
+
+@media (min-width: 547px) and (max-width: 768px) {
+  .instrument-name {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 546px) {
+  .instrument-name {
+    font-size: 0.5rem;
+    margin-bottom: 1rem;
+  }
+}
+

@@ -8,14 +8,15 @@ import ModalContext from "../store/modalContext";
 import "./mainPanel.css";
 import LoadBeatModal from "./modals/loadBeatModal";
 import SaveBeatModal from "./modals/saveBeatModal"
+import ClearConfirmationModal from "./modals/clearConfirmationModal";
 
 function MainPanel() {
   const modalCtx = useContext(ModalContext);
 
   return (
     <Fragment>
-      <div className="main">
-        <div className="actions">
+      <div className="main-panel">
+        <div className="upper-panels">
           <InstrumentPanel />
           <GridPanel />
         </div>
@@ -27,6 +28,7 @@ function MainPanel() {
         )}
         {modalCtx.modalType === "save" && <SaveBeatModal />}
         {modalCtx.modalType === "load" && <LoadBeatModal />}
+        {modalCtx.modalType === "clear" && <ClearConfirmationModal />}
       </div>
     </Fragment>
   );

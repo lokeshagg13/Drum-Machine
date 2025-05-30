@@ -1,4 +1,4 @@
-.save-beat-modal .modal-header {
+.clear-confirmation-modal .modal-header {
   border-bottom: 1px solid #eee;
   margin-bottom: 1.5rem;
   padding-bottom: 0.8rem;
@@ -6,14 +6,14 @@
   padding: 1rem 0.5rem;
 }
 
-.save-beat-modal .modal-header h3 {
+.clear-confirmation-modal .modal-header h3 {
   margin: 0;
   font-size: 1.6rem;
   font-weight: 700;
   color: #38015c;
 }
 
-.save-beat-modal .closeBtn {
+.clear-confirmation-modal .closeBtn {
   background: none;
   border: none;
   font-size: 1.2rem;
@@ -21,7 +21,7 @@
   color: #888;
 }
 
-.save-beat-modal .control {
+.clear-confirmation-modal .control {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -30,13 +30,13 @@
   gap: 0.5rem;
 }
 
-.save-beat-modal .control label {
+.clear-confirmation-moda .control label {
   font-weight: 500;
   font-size: 1rem;
   color: #444;
 }
 
-.save-beat-modal .control input {
+.clear-confirmation-modal .control input {
   width: 100%;
   padding: 0.6rem 1rem;
   border: 1px solid #ccc;
@@ -47,6 +47,6 @@
   transition: border-color 0.2s ease;
 }
 
-.save-beat-modal .control input:focus {
+.clear-confirmation-modal .control input:focus {
   border-color: #5c1d91;
 }

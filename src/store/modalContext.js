@@ -2,8 +2,8 @@ import { createContext, useState } from "react";
 
 const ModalContext = createContext({
   modalType: null,
-  showModal: (type) => {},
-  hideModals: () => {},
+  showModal: (type) => { },
+  hideModals: () => { },
 });
 
 export function ModalContextProvider(props) {
@@ -14,6 +14,8 @@ export function ModalContextProvider(props) {
       setModalType("save");
     } else if (type === "load") {
       setModalType("load");
+    } else if (type === "clear") {
+      setModalType("clear");
     }
   }
 
