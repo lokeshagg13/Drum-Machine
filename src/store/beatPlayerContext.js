@@ -1,92 +1,95 @@
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 
 import constants from "./constants";
-import instrumentsList from "./instruments.js";
+import Instrument from "../logic/instruments.js";
 
 const BeatPlayerContext = createContext({
-  numberOfInstruments: 6,
-  numberOfBeats: 8,
-  bpm: 240,
-  isPlaying: true,
-  currentGrid: new Array(6).fill(new Array(8).fill("unselected")),
-  instruments: null,
-  activeBeat: 1,
-  moveToNextBeat: () => { },
-  toggleGridCellSelection: (rowIdx, colIdx) => { },
-  changeGridCellBasedOnActiveBeat: () => { },
-  togglePlay: () => { },
-  clearGrid: () => { },
-  isBeatGridEmpty: (considerDisabled) => { },
-  incrementBPM: () => { },
-  decrementBPM: () => { },
+  beatPlayerStatus: null,
+  numberOfInstruments: 0,
+  numberOfBeats: 0,
+  bpm: 0,
+  instruments: [],
+  activeBeatRef: 1,
+  gridRef: [],
+  gridState: [],
+  startBeatPlayer: () => { },
+  pauseBeatPlayer: () => { },
+  resumeBeatPlayer: () => { },
   incrementBeats: () => { },
   decrementBeats: () => { },
+  incrementBPM: () => { },
+  decrementBPM: () => { },
   enableInstrument: (id) => { },
   disableInstrument: (id) => { },
-  loadBeat: (bpm, numberOfBeats, numberOfInstruments, instruments, grid) => { },
+  clearGrid: () => { },
+  isBeatGridEmpty: (considerDisabled) => { },
+  toggleGridCellSelection: (rowIdx, colIdx) => { },
+  updateGridBasedOnActiveBeat: () => { },
+  playActiveBeat: () => { },
+  moveToNextBeat: () => { },
+  loadBeat: (bpm, numberOfBeats, numberOfInstruments, instruments, grid) => { }
 });
 
 export function BeatPlayerContextProvider(props) {
-  const [numberOfInstruments, setNumberOfInstruments] = useState(6);
-  const [numberOfBeats, setNumberOfBeats] = useState(8);
-  const [bpm, setBPM] = useState(240);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [activeBeat, setActiveBeat] = useState(1);
+  const [beatPlayerStatus, setBeatPlayerStatus] = useState(null);
+  const [numberOfInstruments, setNumberOfInstruments] = useState(constants.INSTRUMENTS.length);
+  const [numberOfBeats, setNumberOfBeats] = useState(constants.DEFAULT_BEATS);
+  const [bpm, setBPM] = useState(constants.DEFAULT_BPM);
   const [instruments, setInstruments] = useState(() => {
-    return instrumentsList.map((instrument) => ({
-      id: instrument.instrument_id,
-      name: instrument.instrument_name,
-      active: true,
-    }));
+    return constants.INSTRUMENTS.map((instrumentName, index) => new Instrument(index, instrumentName));
   });
-  const [currentGrid, setCurrentGrid] = useState(() => {
+  const [gridState, setGridState] = useState(() => {
     return new Array(numberOfInstruments).fill(
-      new Array(numberOfBeats).fill("unselected")
+      new Array(numberOfBeats).fill(constants.CELL.UNSELECTED)
     );
   });
 
-  function moveToNextBeat() {
-    if (activeBeat < numberOfBeats - 1) setActiveBeat(activeBeat + 1);
-    else setActiveBeat(0);
+  const activeBeatRef = useRef(1);
+  const gridRef = useRef(new Array(numberOfInstruments).fill(
+    new Array(numberOfBeats).fill(constants.CELL.UNSELECTED)
+  ));
+
+  function startBeatPlayer() {
+    setBeatPlayerStatus("running");
   }
 
-  function toggleGridCellSelection(rowIdx, colIdx) {
-    setCurrentGrid((currentGrid) =>
-      currentGrid.map((row, rIdx) => {
-        if (rowIdx === rIdx) {
-          // eslint-disable-next-line
-          return row.map((col, cIdx) => {
-            if (colIdx === cIdx) {
-              if (instruments[rowIdx].active === false) return "disabled";
-              else if (col === "selected") return "unselected";
-              else if (col === "unselected") return "selected";
-              else if (col === "playing") return "unselected";
-              else if (col === "current") return "selected";
-              else if (col === "disabled") return "disabled";
-            } else return col;
-          });
-        } else return row;
-      })
-    );
+  function pauseBeatPlayer() {
+    setBeatPlayerStatus("paused");
   }
 
-  function changeGridCellBasedOnActiveBeat() {
-    setCurrentGrid((currentGrid) =>
-      currentGrid.map((row) => {
-        return row.map((col, cIdx) => {
-          if (cIdx === activeBeat && col === "selected") return "playing";
-          else if (cIdx === activeBeat && col === "unselected")
-            return "current";
-          else if (col === "playing") return "selected";
-          else if (col === "current") return "unselected";
-          else return col;
-        });
-      })
-    );
+  function resumeBeatPlayer() {
+    setBeatPlayerStatus("running");
   }
 
-  function togglePlay() {
-    setIsPlaying(!isPlaying);
+  function updateGrid(newGrid) {
+    gridRef.current = newGrid;
+    setGridState(newGrid);
+  }
+
+  function incrementBeats() {
+    if (numberOfBeats < constants.MAX_BEATS) {
+      setNumberOfBeats(numberOfBeats + 1);
+      const currentGrid = gridRef.current;
+      const newGrid = currentGrid.map((row) => {
+        const rowDuplicate = JSON.parse(JSON.stringify(row));
+        rowDuplicate.push(constants.CELL.UNSELECTED);
+        return rowDuplicate;
+      });
+      updateGrid(newGrid);
+    }
+  }
+
+  function decrementBeats() {
+    if (numberOfBeats > constants.MIN_BEATS) {
+      setNumberOfBeats(numberOfBeats - 1);
+      const currentGrid = gridRef.current;
+      const newGrid = currentGrid.map((row) => {
+        const rowDuplicate = JSON.parse(JSON.stringify(row));
+        rowDuplicate.pop();
+        return rowDuplicate;
+      });
+      updateGrid(newGrid);
+    }
   }
 
   function incrementBPM() {
@@ -97,30 +100,24 @@ export function BeatPlayerContextProvider(props) {
     if (bpm > constants.MIN_BPM) setBPM(bpm - constants.BPM_DECREMENT);
   }
 
-  function incrementBeats() {
-    if (numberOfBeats < constants.MAX_BEATS) {
-      setNumberOfBeats(numberOfBeats + 1);
-      setCurrentGrid((currentGrid) =>
-        currentGrid.map((row) => {
-          const rowDuplicate = JSON.parse(JSON.stringify(row));
-          rowDuplicate.push("unselected");
-          return rowDuplicate;
-        })
-      );
-    }
-  }
+  function enableInstrument(id) {
+    setInstruments((instruments) =>
+      instruments.map((instrument) => {
+        if (instrument.id === id) instrument.active = true;
+        return instrument;
+      })
+    );
 
-  function decrementBeats() {
-    if (numberOfBeats > constants.MIN_BEATS) {
-      setNumberOfBeats(numberOfBeats - 1);
-      setCurrentGrid((currentGrid) =>
-        currentGrid.map((row) => {
-          const rowDuplicate = JSON.parse(JSON.stringify(row));
-          rowDuplicate.pop();
-          return rowDuplicate;
-        })
-      );
-    }
+    const currentGrid = gridRef.current;
+    const newGrid = currentGrid.map((row, rIdx) => {
+      if (id === rIdx) {
+        return row.map((col) => {
+          if (col === constants.CELL.DISABLED) return constants.CELL.SELECTED;
+          else return col;
+        });
+      } else return row;
+    });
+    updateGrid(newGrid);
   }
 
   function disableInstrument(id) {
@@ -131,63 +128,102 @@ export function BeatPlayerContextProvider(props) {
       })
     );
 
-    setCurrentGrid((currentGrid) =>
-      currentGrid.map((row, rIdx) => {
-        if (id - 1 === rIdx) {
-          return row.map((col) => {
-            if (col === "selected" || col === "playing") return "disabled";
-            else return col;
-          });
-        } else return row;
-      })
-    );
-  }
-
-  function enableInstrument(id) {
-    setInstruments((instruments) =>
-      instruments.map((instrument) => {
-        if (instrument.id === id) instrument.active = true;
-        return instrument;
-      })
-    );
-
-    setCurrentGrid((currentGrid) =>
-      currentGrid.map((row, rIdx) => {
-        if (id - 1 === rIdx) {
-          return row.map((col) => {
-            if (col === "disabled") return "selected";
-            else return col;
-          });
-        } else return row;
-      })
-    );
+    const currentGrid = gridRef.current;
+    const newGrid = currentGrid.map((row, rIdx) => {
+      if (id === rIdx) {
+        return row.map((col) => {
+          if (col === constants.CELL.SELECTED || col === constants.CELL.PLAYING) return constants.CELL.DISABLED;
+          else return col;
+        });
+      } else return row;
+    });
+    updateGrid(newGrid);
   }
 
   function clearGrid() {
-    setCurrentGrid((currentGrid) =>
-      currentGrid.map((row) => {
-        return row.map((col) => {
-          if (col === "selected") return "unselected";
-          else if (col === "playing") return "current";
-          else if (col === "disabled") return "unselected";
-          else return col;
-        });
-      })
-    );
+    updateGrid(new Array(numberOfInstruments).fill(
+      new Array(numberOfBeats).fill(constants.CELL.UNSELECTED)
+    ));
+    activeBeatRef.current = 1;
   }
 
   function isBeatGridEmpty(considerDisabled = false) {
+    const currentGrid = gridRef.current;
     for (let i = 0; i < currentGrid.length; i++) {
       for (let j = 0; j < currentGrid[0].length; j++) {
-        if (currentGrid[i][j] === "selected" || currentGrid[i][j] === "playing") {
+        if (currentGrid[i][j] === constants.CELL.SELECTED || currentGrid[i][j] === constants.CELL.PLAYING) {
           return false;
         }
-        if (considerDisabled && currentGrid[i][j] === "disabled") {
+        if (considerDisabled && currentGrid[i][j] === constants.CELL.DISABLED) {
           return false;
         }
       }
     }
     return true;
+  }
+
+  function toggleGridCellSelection(rowIdx, colIdx) {
+    const currentGrid = gridRef.current;
+    const newGrid = currentGrid.map((row, rIdx) => {
+      if (rowIdx !== rIdx) return row;
+      return row.map((col, cIdx) => {
+        if (colIdx !== cIdx) return col;
+        if (instruments[rowIdx].active === false) return constants.CELL.DISABLED;
+        else if (col === constants.CELL.SELECTED) return constants.CELL.UNSELECTED;
+        else if (col === constants.CELL.UNSELECTED) return constants.CELL.SELECTED;
+        else if (col === constants.CELL.PLAYING) return constants.CELL.UNSELECTED;
+        else if (col === constants.CELL.CURRENT) return constants.CELL.SELECTED;
+        else if (col === constants.CELL.DISABLED) return constants.CELL.DISABLED;
+        else return constants.CELL.DISABLED;
+      });
+    });
+    updateGrid(newGrid);
+  }
+
+  function updateGridBasedOnActiveBeat() {
+    const currentGrid = gridRef.current;
+    const newGrid = currentGrid.map(
+      (row) => {
+        return row.map(
+          (col, cIdx) => {
+            switch (col) {
+              case constants.CELL.SELECTED:
+                return cIdx === activeBeatRef.current - 1 ?
+                  constants.CELL.PLAYING :
+                  col;
+              case constants.CELL.UNSELECTED:
+                return cIdx === activeBeatRef.current - 1 ?
+                  constants.CELL.CURRENT :
+                  col;
+              case constants.CELL.PLAYING:
+                return constants.CELL.SELECTED;
+              case constants.CELL.CURRENT:
+                return constants.CELL.UNSELECTED;
+              default: return col;
+            }
+          }
+        );
+      }
+    );
+    updateGrid(newGrid);
+  }
+
+  function playActiveBeat() {
+    const currentGrid = gridRef.current;
+    currentGrid.forEach((row, instrumentIdx) => {
+      if (instruments[instrumentIdx]?.active) {
+        if (row[activeBeatRef.current - 1] === constants.CELL.PLAYING) {
+          instruments[instrumentIdx].playSound();
+        }
+      }
+    });
+  }
+
+  function moveToNextBeat() {
+    const currentBeat = activeBeatRef.current;
+    activeBeatRef.current = (currentBeat < numberOfBeats) ?
+      currentBeat + 1 :
+      1;
   }
 
   function loadBeat(
@@ -201,32 +237,33 @@ export function BeatPlayerContextProvider(props) {
     setNumberOfBeats(numberOfBeats);
     setNumberOfInstruments(numberOfInstruments);
     setInstruments(instruments);
-    setCurrentGrid(grid);
-    setIsPlaying(true);
-    setActiveBeat(1);
+    updateGrid(grid);
   }
 
   const currentBeatPlayerContext = {
+    beatPlayerStatus,
     numberOfInstruments,
     numberOfBeats,
     bpm,
-    isPlaying,
-    currentGrid,
     instruments,
-    activeBeat,
-    moveToNextBeat,
-    toggleGridCellSelection,
-    changeGridCellBasedOnActiveBeat,
-    togglePlay,
-    incrementBPM,
-    decrementBPM,
+    gridRef,
+    gridState,
+    startBeatPlayer,
+    pauseBeatPlayer,
+    resumeBeatPlayer,
     incrementBeats,
     decrementBeats,
+    incrementBPM,
+    decrementBPM,
     enableInstrument,
     disableInstrument,
     clearGrid,
     isBeatGridEmpty,
-    loadBeat,
+    toggleGridCellSelection,
+    updateGridBasedOnActiveBeat,
+    playActiveBeat,
+    moveToNextBeat,
+    loadBeat
   };
 
   return (
@@ -237,9 +274,3 @@ export function BeatPlayerContextProvider(props) {
 }
 
 export default BeatPlayerContext;
-
-// modals for save and load menu
-
-// openSaveModal
-// openLoadModal
-// hideModals

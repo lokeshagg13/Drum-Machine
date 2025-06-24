@@ -4,11 +4,10 @@ import BeatPlayerContext from "../../store/beatPlayerContext";
 import "./instrumentItem.css";
 
 function InstrumentItem(props) {
-  const { id, name, image } = props;
+  const { id, name, image, active } = props;
   const beatPlayerCtx = useContext(BeatPlayerContext);
-  const active = beatPlayerCtx.instruments[id - 1].active;
-
-  function toggleInstrumentStatus(event) {
+  
+  function toggleInstrumentStatus() {
     if (active) beatPlayerCtx.disableInstrument(id);
     else beatPlayerCtx.enableInstrument(id);
   }

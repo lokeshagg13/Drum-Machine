@@ -19,38 +19,49 @@ function ControlPanel() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
-        if (e.key === "+" || e.key === "=") {
-          // Some keyboards require '=' key for '+'
-          e.preventDefault();
-          if (beatPlayerCtx.bpm < constants.MAX_BPM) {
-            beatPlayerCtx.incrementBPM();
-          }
-        } else if (e.key === "_" || e.key === "-") {
-          // Shift + '-' gives '_'
-          e.preventDefault();
-          if (beatPlayerCtx.bpm > constants.MIN_BPM) {
-            beatPlayerCtx.decrementBPM();
-          }
-        }
-      }
-      if ((e.ctrlKey || e.metaKey) && e.altKey) {
-        if (e.key === "+" || e.key === "=") {
-          e.preventDefault();
-          if (beatPlayerCtx.numberOfBeats < constants.MAX_BEATS) {
-            beatPlayerCtx.incrementBeats();
-          }
-        } else if (e.key === "_" || e.key === "–" || e.key === "-") {
-          // Shift + '-' gives '_'
-          e.preventDefault();
-          if (beatPlayerCtx.numberOfBeats > constants.MIN_BEATS) {
-            beatPlayerCtx.decrementBeats();
+      if (beatPlayerCtx.beatPlayerStatus === "running") {
+        // For changing BPM
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
+          if (e.key === "+" || e.key === "=") {
+            // Some keyboards require '=' key for '+'
+            e.preventDefault();
+            if (beatPlayerCtx.bpm < constants.MAX_BPM) {
+              beatPlayerCtx.incrementBPM();
+            }
+          } else if (e.key === "_" || e.key === "-") {
+            // Shift + '-' gives '_'
+            e.preventDefault();
+            if (beatPlayerCtx.bpm > constants.MIN_BPM) {
+              beatPlayerCtx.decrementBPM();
+            }
           }
         }
-      }
-      if (e.code === "Space") {
-        e.preventDefault();
-        beatPlayerCtx.togglePlay();
+        // For changing number of beats
+        if ((e.ctrlKey || e.metaKey) && e.altKey) {
+          if (e.key === "+" || e.key === "=") {
+            e.preventDefault();
+            if (beatPlayerCtx.numberOfBeats < constants.MAX_BEATS) {
+              beatPlayerCtx.incrementBeats();
+            }
+          } else if (e.key === "_" || e.key === "–" || e.key === "-") {
+            // Shift + '-' gives '_'
+            e.preventDefault();
+            if (beatPlayerCtx.numberOfBeats > constants.MIN_BEATS) {
+              beatPlayerCtx.decrementBeats();
+            }
+          }
+        }
+        // For pausing the beat player
+        if (e.code === "Space") {
+          e.preventDefault();
+          beatPlayerCtx.handlePauseBeatPlayer();
+        }
+      } else if (beatPlayerCtx.beatPlayerStatus === "paused") {
+        // For resuming the beat player
+        if (e.code === "Space") {
+          e.preventDefault();
+          beatPlayerCtx.handleResumeBeatPlayer();
+        }
       }
     };
 
@@ -140,10 +151,22 @@ function ControlPanel() {
 
         {/* Button Grid */}
         <div className="button-grid">
-          <button onClick={() => beatPlayerCtx.togglePlay()}>
-            {beatPlayerCtx.isPlaying ? <PauseIcon /> : <PlayIcon />}
+          <button
+            onClick={
+              beatPlayerCtx.beatPlayerStatus === "running"
+                ? () => beatPlayerCtx.pauseBeatPlayer()
+                : beatPlayerCtx.beatPlayerStatus === "paused"
+                ? () => beatPlayerCtx.resumeBeatPlayer()
+                : () => {}
+            }
+          >
+            {beatPlayerCtx.beatPlayerStatus === "running" ? (
+              <PauseIcon />
+            ) : (
+              <PlayIcon />
+            )}
             <span className="button-text">
-              {beatPlayerCtx.isPlaying ? "Pause" : "Play"}
+              {beatPlayerCtx.beatPlayerStatus === "running" ? "Pause" : "Play"}
             </span>
           </button>
           {beatPlayerCtx.isBeatGridEmpty(true) ? (

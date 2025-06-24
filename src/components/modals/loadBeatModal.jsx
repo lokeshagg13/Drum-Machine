@@ -1,10 +1,11 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, act } from "react";
 import ModalContext from "../../store/modalContext";
 import BeatPlayerContext from "../../store/beatPlayerContext";
 import Notification from "../ui/elements/notification";
-import generateRandomBeat from "./beatRandomizer";
+import generateRandomBeat from "../../logic/beatRandomizer";
 
 import "./loadBeatModal.css";
+import Instrument from "../../logic/instruments";
 
 function LoadBeatModal() {
   const fileInputRef = useRef();
@@ -60,8 +61,10 @@ function LoadBeatModal() {
           parsedBeat.bpm,
           parsedBeat.numberOfBeats,
           parsedBeat.numberOfInstruments,
-          parsedBeat.instruments,
-          parsedBeat.currentGrid
+          parsedBeat.instruments.map(({ id, name, active }) =>
+            Instrument.load(id, name, active)
+          ),
+          parsedBeat.grid
         );
         modalCtx.hideModals();
       } catch (error) {

@@ -1,17 +1,21 @@
-import instrumentsList from "../../store/instruments.js";
+import { useContext } from "react";
 import InstrumentItem from "./instrumentItem";
+import BeatPlayerContext from "../../store/beatPlayerContext";
 
 import "./instrumentPanel.css";
 
 function InstrumentPanel() {
+  const beatPlayerContext = useContext(BeatPlayerContext);
+
   return (
     <div className="instrument-panel">
-      {instrumentsList.map((instrument) => (
+      {beatPlayerContext.instruments.map(({ id, name, image, active }) => (
         <InstrumentItem
-          key={instrument.instrument_id}
-          id={instrument.instrument_id}
-          name={instrument.instrument_name}
-          image={instrument.instrument_image}
+          key={id}
+          id={id}
+          name={name}
+          image={image}
+          active={active}
         />
       ))}
     </div>

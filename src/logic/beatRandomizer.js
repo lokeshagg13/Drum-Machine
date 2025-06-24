@@ -1,5 +1,6 @@
-import constants from "../../store/constants";
-import instruments from "../../store/instruments";
+import constants from "../store/constants";
+import Instrument from "./instruments";
+import instruments from "./instruments";
 
 function generateRandomMultiple(min, max, mul = 1) {
     const minFactor = Math.ceil(min / mul);
@@ -10,32 +11,32 @@ function generateRandomMultiple(min, max, mul = 1) {
 }
 
 function generateRandomInstrumentList() {
-    return instruments.map((instrument) => ({
-        id: instrument.instrument_id,
-        name: instrument.instrument_name,
-        active: Math.random() < 0.95,
-    }));
+    return constants.INSTRUMENTS.map((instrumentName, index) => {
+        const instrument = new Instrument(index, instrumentName);
+        instrument.active = Math.random() < 0.95;
+        return instrument
+    });
 }
 
-function generateRandomBeatGrid(instrumentsList, numBeats, minPerc, maxPerc) {
-    const totalCells = instrumentsList.length * numBeats;
+function generateRandomBeatGrid(instruments, numBeats, minPerc, maxPerc) {
+    const totalCells = instruments.length * numBeats;
     const randomPerc = Math.random() * (maxPerc - minPerc) + minPerc;
     const numSelected = Math.floor((randomPerc / 100) * totalCells);
     const flatArray = Array(numSelected)
-        .fill("selected")
-        .concat(Array(totalCells - numSelected).fill("unselected"));
+        .fill(constants.CELL.SELECTED)
+        .concat(Array(totalCells - numSelected).fill(constants.CELL.UNSELECTED));
 
     for (let i = flatArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [flatArray[i], flatArray[j]] = [flatArray[j], flatArray[i]];
     }
     const grid = [];
-    for (let i = 0; i < instrumentsList.length; i++) {
+    for (let i = 0; i < instruments.length; i++) {
         grid.push(flatArray.slice(i * numBeats, (i + 1) * numBeats));
-        if (instrumentsList[i] === false) {
+        if (instruments[i] === false) {
             for (let j = 0; j < numBeats; j++) {
-                if (grid[i][j] === "selected") {
-                    grid[i][j] = "disabled"
+                if (grid[i][j] === constants.CELL.SELECTED) {
+                    grid[i][j] = constants.CELL.DISABLED
                 }
             }
         }
@@ -61,6 +62,7 @@ function generateRandomBeat() {
         constants.SELECTED_CELL_PERCENTAGE_RANGE[1]
     );
     return { randomBPM, randomNumBeats, randomInstruments, randomBeatGrid }
+
 }
 
 export default generateRandomBeat;

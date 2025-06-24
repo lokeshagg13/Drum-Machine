@@ -9,6 +9,7 @@ import "./mainPanel.css";
 import LoadBeatModal from "./modals/loadBeatModal";
 import SaveBeatModal from "./modals/saveBeatModal"
 import ClearConfirmationModal from "./modals/clearConfirmationModal";
+import BeatPlayer from "./beatPlayer";
 
 function MainPanel() {
   const modalCtx = useContext(ModalContext);
@@ -19,6 +20,7 @@ function MainPanel() {
         <div className="upper-panels">
           <InstrumentPanel />
           <GridPanel />
+          <BeatPlayer />
         </div>
         <ControlPanel />
       </div>

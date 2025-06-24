@@ -36,7 +36,7 @@ function SaveBeatModal() {
         numberOfBeats: beatPlayerCtx.numberOfBeats,
         numberOfInstruments: beatPlayerCtx.numberOfInstruments,
         instruments: beatPlayerCtx.instruments,
-        currentGrid: beatPlayerCtx.currentGrid,
+        grid: beatPlayerCtx.gridRef.current,
       };
       const jsonBlob = new Blob([JSON.stringify(beatData, null, 2)], {
         type: "application/json",
