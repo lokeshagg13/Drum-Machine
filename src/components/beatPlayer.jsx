@@ -34,6 +34,7 @@ function BeatPlayer() {
   useEffect(() => {
     if (beatPlayerCtx.beatPlayerStatus === null)
       beatPlayerCtx.startBeatPlayer();
+    // eslint-disable-next-line
   }, []);
 
   return <></>;

@@ -1,6 +1,5 @@
 import constants from "../store/constants";
 import Instrument from "./instruments";
-import instruments from "./instruments";
 
 function generateRandomMultiple(min, max, mul = 1) {
     const minFactor = Math.ceil(min / mul);

@@ -1,4 +1,4 @@
-import { useState, useContext, useRef, act } from "react";
+import { useState, useContext, useRef } from "react";
 import ModalContext from "../../store/modalContext";
 import BeatPlayerContext from "../../store/beatPlayerContext";
 import Notification from "../ui/elements/notification";
