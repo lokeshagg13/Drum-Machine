@@ -25,8 +25,8 @@ A responsive, interactive, and customizable web-based **Drum Machine** built wit
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/drum-machine.git
-cd drum-machine
+git clone https://github.com/lokeshagg13/Drum-Machine.git
+cd Drum-Machine
 ````
 
 ### 2. Install Dependencies
