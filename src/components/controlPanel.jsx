@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import BeatPlayerContext from "../store/beatPlayerContext";
-import constants from "../store/constants";
+import appConfig from "../logic/config";
 import ModalContext from "../store/modalContext";
 
 import "./controlPanel.css";
@@ -25,13 +25,13 @@ function ControlPanel() {
           if (e.key === "+" || e.key === "=") {
             // Some keyboards require '=' key for '+'
             e.preventDefault();
-            if (beatPlayerCtx.bpm < constants.MAX_BPM) {
+            if (beatPlayerCtx.bpm < appConfig.MAX_BPM) {
               beatPlayerCtx.incrementBPM();
             }
           } else if (e.key === "_" || e.key === "-") {
             // Shift + '-' gives '_'
             e.preventDefault();
-            if (beatPlayerCtx.bpm > constants.MIN_BPM) {
+            if (beatPlayerCtx.bpm > appConfig.MIN_BPM) {
               beatPlayerCtx.decrementBPM();
             }
           }
@@ -40,13 +40,13 @@ function ControlPanel() {
         if ((e.ctrlKey || e.metaKey) && e.altKey) {
           if (e.key === "+" || e.key === "=") {
             e.preventDefault();
-            if (beatPlayerCtx.numberOfBeats < constants.MAX_BEATS) {
+            if (beatPlayerCtx.numberOfBeats < appConfig.MAX_BEATS) {
               beatPlayerCtx.incrementBeats();
             }
           } else if (e.key === "_" || e.key === "–" || e.key === "-") {
             // Shift + '-' gives '_'
             e.preventDefault();
-            if (beatPlayerCtx.numberOfBeats > constants.MIN_BEATS) {
+            if (beatPlayerCtx.numberOfBeats > appConfig.MIN_BEATS) {
               beatPlayerCtx.decrementBeats();
             }
           }
@@ -96,7 +96,7 @@ function ControlPanel() {
               <button
                 className="decrement"
                 onClick={() => beatPlayerCtx.decrementBPM()}
-                disabled={beatPlayerCtx.bpm <= constants.MIN_BPM}
+                disabled={beatPlayerCtx.bpm <= appConfig.MIN_BPM}
               >
                 –
               </button>
@@ -104,7 +104,7 @@ function ControlPanel() {
               <button
                 className="increment"
                 onClick={() => beatPlayerCtx.incrementBPM()}
-                disabled={beatPlayerCtx.bpm >= constants.MAX_BPM}
+                disabled={beatPlayerCtx.bpm >= appConfig.MAX_BPM}
               >
                 +
               </button>
@@ -133,7 +133,7 @@ function ControlPanel() {
               <button
                 className="decrement"
                 onClick={() => beatPlayerCtx.decrementBeats()}
-                disabled={beatPlayerCtx.numberOfBeats <= constants.MIN_BEATS}
+                disabled={beatPlayerCtx.numberOfBeats <= appConfig.MIN_BEATS}
               >
                 –
               </button>
@@ -141,7 +141,7 @@ function ControlPanel() {
               <button
                 className="increment"
                 onClick={() => beatPlayerCtx.incrementBeats()}
-                disabled={beatPlayerCtx.numberOfBeats >= constants.MAX_BEATS}
+                disabled={beatPlayerCtx.numberOfBeats >= appConfig.MAX_BEATS}
               >
                 +
               </button>

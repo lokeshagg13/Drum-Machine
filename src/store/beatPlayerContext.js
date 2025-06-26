@@ -1,6 +1,6 @@
 import { createContext, useRef, useState } from "react";
 
-import constants from "./constants";
+import appConfig from "../logic/config.js";
 import Instrument from "../logic/instruments.js";
 
 const BeatPlayerContext = createContext({
@@ -32,21 +32,21 @@ const BeatPlayerContext = createContext({
 
 export function BeatPlayerContextProvider(props) {
   const [beatPlayerStatus, setBeatPlayerStatus] = useState(null);
-  const [numberOfInstruments, setNumberOfInstruments] = useState(constants.INSTRUMENTS.length);
-  const [numberOfBeats, setNumberOfBeats] = useState(constants.DEFAULT_BEATS);
-  const [bpm, setBPM] = useState(constants.DEFAULT_BPM);
+  const [numberOfInstruments, setNumberOfInstruments] = useState(appConfig.INSTRUMENTS.length);
+  const [numberOfBeats, setNumberOfBeats] = useState(appConfig.DEFAULT_BEATS);
+  const [bpm, setBPM] = useState(appConfig.DEFAULT_BPM);
   const [instruments, setInstruments] = useState(() => {
-    return constants.INSTRUMENTS.map((instrumentName, index) => new Instrument(index, instrumentName));
+    return appConfig.INSTRUMENTS.map((instrumentName, index) => new Instrument(index, instrumentName));
   });
   const [gridState, setGridState] = useState(() => {
     return new Array(numberOfInstruments).fill(
-      new Array(numberOfBeats).fill(constants.CELL.UNSELECTED)
+      new Array(numberOfBeats).fill(appConfig.CELL.UNSELECTED)
     );
   });
 
   const activeBeatRef = useRef(1);
   const gridRef = useRef(new Array(numberOfInstruments).fill(
-    new Array(numberOfBeats).fill(constants.CELL.UNSELECTED)
+    new Array(numberOfBeats).fill(appConfig.CELL.UNSELECTED)
   ));
 
   function startBeatPlayer() {
@@ -67,12 +67,12 @@ export function BeatPlayerContextProvider(props) {
   }
 
   function incrementBeats() {
-    if (numberOfBeats < constants.MAX_BEATS) {
+    if (numberOfBeats < appConfig.MAX_BEATS) {
       setNumberOfBeats(numberOfBeats + 1);
       const currentGrid = gridRef.current;
       const newGrid = currentGrid.map((row) => {
         const rowDuplicate = JSON.parse(JSON.stringify(row));
-        rowDuplicate.push(constants.CELL.UNSELECTED);
+        rowDuplicate.push(appConfig.CELL.UNSELECTED);
         return rowDuplicate;
       });
       updateGrid(newGrid);
@@ -80,7 +80,7 @@ export function BeatPlayerContextProvider(props) {
   }
 
   function decrementBeats() {
-    if (numberOfBeats > constants.MIN_BEATS) {
+    if (numberOfBeats > appConfig.MIN_BEATS) {
       setNumberOfBeats(numberOfBeats - 1);
       const currentGrid = gridRef.current;
       const newGrid = currentGrid.map((row) => {
@@ -93,11 +93,11 @@ export function BeatPlayerContextProvider(props) {
   }
 
   function incrementBPM() {
-    if (bpm < constants.MAX_BPM) setBPM(bpm + constants.BPM_INCREMENT);
+    if (bpm < appConfig.MAX_BPM) setBPM(bpm + appConfig.BPM_INCREMENT);
   }
 
   function decrementBPM() {
-    if (bpm > constants.MIN_BPM) setBPM(bpm - constants.BPM_DECREMENT);
+    if (bpm > appConfig.MIN_BPM) setBPM(bpm - appConfig.BPM_DECREMENT);
   }
 
   function enableInstrument(id) {
@@ -112,7 +112,7 @@ export function BeatPlayerContextProvider(props) {
     const newGrid = currentGrid.map((row, rIdx) => {
       if (id === rIdx) {
         return row.map((col) => {
-          if (col === constants.CELL.DISABLED) return constants.CELL.SELECTED;
+          if (col === appConfig.CELL.DISABLED) return appConfig.CELL.SELECTED;
           else return col;
         });
       } else return row;
@@ -132,7 +132,7 @@ export function BeatPlayerContextProvider(props) {
     const newGrid = currentGrid.map((row, rIdx) => {
       if (id === rIdx) {
         return row.map((col) => {
-          if (col === constants.CELL.SELECTED || col === constants.CELL.PLAYING) return constants.CELL.DISABLED;
+          if (col === appConfig.CELL.SELECTED || col === appConfig.CELL.PLAYING) return appConfig.CELL.DISABLED;
           else return col;
         });
       } else return row;
@@ -142,7 +142,7 @@ export function BeatPlayerContextProvider(props) {
 
   function clearGrid() {
     updateGrid(new Array(numberOfInstruments).fill(
-      new Array(numberOfBeats).fill(constants.CELL.UNSELECTED)
+      new Array(numberOfBeats).fill(appConfig.CELL.UNSELECTED)
     ));
     activeBeatRef.current = 1;
   }
@@ -151,10 +151,10 @@ export function BeatPlayerContextProvider(props) {
     const currentGrid = gridRef.current;
     for (let i = 0; i < currentGrid.length; i++) {
       for (let j = 0; j < currentGrid[0].length; j++) {
-        if (currentGrid[i][j] === constants.CELL.SELECTED || currentGrid[i][j] === constants.CELL.PLAYING) {
+        if (currentGrid[i][j] === appConfig.CELL.SELECTED || currentGrid[i][j] === appConfig.CELL.PLAYING) {
           return false;
         }
-        if (considerDisabled && currentGrid[i][j] === constants.CELL.DISABLED) {
+        if (considerDisabled && currentGrid[i][j] === appConfig.CELL.DISABLED) {
           return false;
         }
       }
@@ -168,13 +168,13 @@ export function BeatPlayerContextProvider(props) {
       if (rowIdx !== rIdx) return row;
       return row.map((col, cIdx) => {
         if (colIdx !== cIdx) return col;
-        if (instruments[rowIdx].active === false) return constants.CELL.DISABLED;
-        else if (col === constants.CELL.SELECTED) return constants.CELL.UNSELECTED;
-        else if (col === constants.CELL.UNSELECTED) return constants.CELL.SELECTED;
-        else if (col === constants.CELL.PLAYING) return constants.CELL.UNSELECTED;
-        else if (col === constants.CELL.CURRENT) return constants.CELL.SELECTED;
-        else if (col === constants.CELL.DISABLED) return constants.CELL.DISABLED;
-        else return constants.CELL.DISABLED;
+        if (instruments[rowIdx].active === false) return appConfig.CELL.DISABLED;
+        else if (col === appConfig.CELL.SELECTED) return appConfig.CELL.UNSELECTED;
+        else if (col === appConfig.CELL.UNSELECTED) return appConfig.CELL.SELECTED;
+        else if (col === appConfig.CELL.PLAYING) return appConfig.CELL.UNSELECTED;
+        else if (col === appConfig.CELL.CURRENT) return appConfig.CELL.SELECTED;
+        else if (col === appConfig.CELL.DISABLED) return appConfig.CELL.DISABLED;
+        else return appConfig.CELL.DISABLED;
       });
     });
     updateGrid(newGrid);
@@ -187,18 +187,18 @@ export function BeatPlayerContextProvider(props) {
         return row.map(
           (col, cIdx) => {
             switch (col) {
-              case constants.CELL.SELECTED:
+              case appConfig.CELL.SELECTED:
                 return cIdx === activeBeatRef.current - 1 ?
-                  constants.CELL.PLAYING :
+                  appConfig.CELL.PLAYING :
                   col;
-              case constants.CELL.UNSELECTED:
+              case appConfig.CELL.UNSELECTED:
                 return cIdx === activeBeatRef.current - 1 ?
-                  constants.CELL.CURRENT :
+                  appConfig.CELL.CURRENT :
                   col;
-              case constants.CELL.PLAYING:
-                return constants.CELL.SELECTED;
-              case constants.CELL.CURRENT:
-                return constants.CELL.UNSELECTED;
+              case appConfig.CELL.PLAYING:
+                return appConfig.CELL.SELECTED;
+              case appConfig.CELL.CURRENT:
+                return appConfig.CELL.UNSELECTED;
               default: return col;
             }
           }
@@ -212,7 +212,7 @@ export function BeatPlayerContextProvider(props) {
     const currentGrid = gridRef.current;
     currentGrid.forEach((row, instrumentIdx) => {
       if (instruments[instrumentIdx]?.active) {
-        if (row[activeBeatRef.current - 1] === constants.CELL.PLAYING) {
+        if (row[activeBeatRef.current - 1] === appConfig.CELL.PLAYING) {
           instruments[instrumentIdx].playSound();
         }
       }

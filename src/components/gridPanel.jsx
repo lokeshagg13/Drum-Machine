@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import BeatPlayerContext from "../store/beatPlayerContext";
 import "./gridPanel.css";
-import constants from "../store/constants";
+import appConfig from "../logic/config";
 
 function GridPanel() {
   const beatPlayerCtx = useContext(BeatPlayerContext);
 
   function getClassNameForCell(value) {
-    for (const [key, val] of Object.entries(constants.CELL)) {
+    for (const [key, val] of Object.entries(appConfig.CELL)) {
       if (val === value) {
         return key.toLowerCase();
       }

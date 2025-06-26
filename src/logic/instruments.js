@@ -36,12 +36,12 @@ class Instrument {
 
   getAudioPath() {
     switch (this.name) {
-      case 'Hi Hat': return 'hi hat.WAV';
-      case 'Snare': return 'snare.WAV';
-      case 'Bass Drum': return 'kick.WAV';
+      case 'Hi Hat': return 'hi-hat.wav';
+      case 'Snare': return 'snare.wav';
+      case 'Bass Drum': return 'kick.wav';
       case 'Crash': return 'crash.wav';
       case 'Clap': return 'clap.wav';
-      case 'Floor Tom': return 'floor tom.wav';
+      case 'Floor Tom': return 'floor-tom.wav';
       default: return null;
     }
   }

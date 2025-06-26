@@ -1,4 +1,4 @@
-import constants from "../store/constants";
+import appConfig from "../logic/config";
 import Instrument from "./instruments";
 
 function generateRandomMultiple(min, max, mul = 1) {
@@ -10,7 +10,7 @@ function generateRandomMultiple(min, max, mul = 1) {
 }
 
 function generateRandomInstrumentList() {
-    return constants.INSTRUMENTS.map((instrumentName, index) => {
+    return appConfig.INSTRUMENTS.map((instrumentName, index) => {
         const instrument = new Instrument(index, instrumentName);
         instrument.active = Math.random() < 0.95;
         return instrument
@@ -22,8 +22,8 @@ function generateRandomBeatGrid(instruments, numBeats, minPerc, maxPerc) {
     const randomPerc = Math.random() * (maxPerc - minPerc) + minPerc;
     const numSelected = Math.floor((randomPerc / 100) * totalCells);
     const flatArray = Array(numSelected)
-        .fill(constants.CELL.SELECTED)
-        .concat(Array(totalCells - numSelected).fill(constants.CELL.UNSELECTED));
+        .fill(appConfig.CELL.SELECTED)
+        .concat(Array(totalCells - numSelected).fill(appConfig.CELL.UNSELECTED));
 
     for (let i = flatArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -34,8 +34,8 @@ function generateRandomBeatGrid(instruments, numBeats, minPerc, maxPerc) {
         grid.push(flatArray.slice(i * numBeats, (i + 1) * numBeats));
         if (instruments[i] === false) {
             for (let j = 0; j < numBeats; j++) {
-                if (grid[i][j] === constants.CELL.SELECTED) {
-                    grid[i][j] = constants.CELL.DISABLED
+                if (grid[i][j] === appConfig.CELL.SELECTED) {
+                    grid[i][j] = appConfig.CELL.DISABLED
                 }
             }
         }
@@ -45,20 +45,20 @@ function generateRandomBeatGrid(instruments, numBeats, minPerc, maxPerc) {
 
 function generateRandomBeat() {
     const randomBPM = generateRandomMultiple(
-        constants.MIN_BPM,
-        constants.MAX_BPM,
-        constants.BPM_INCREMENT
+        appConfig.MIN_BPM,
+        appConfig.MAX_BPM,
+        appConfig.BPM_INCREMENT
     );
     const randomNumBeats = generateRandomMultiple(
-        constants.MIN_BEATS,
-        constants.MAX_BEATS
+        appConfig.MIN_BEATS,
+        appConfig.MAX_BEATS
     );
     const randomInstruments = generateRandomInstrumentList();
     const randomBeatGrid = generateRandomBeatGrid(
         randomInstruments.map((instrument) => instrument.active),
         randomNumBeats,
-        constants.SELECTED_CELL_PERCENTAGE_RANGE[0],
-        constants.SELECTED_CELL_PERCENTAGE_RANGE[1]
+        appConfig.SELECTED_CELL_PERCENTAGE_RANGE[0],
+        appConfig.SELECTED_CELL_PERCENTAGE_RANGE[1]
     );
     return { randomBPM, randomNumBeats, randomInstruments, randomBeatGrid }
 

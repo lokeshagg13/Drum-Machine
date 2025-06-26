@@ -114,6 +114,14 @@ Saved beats are exported as JSON with structure:
 
 ---
 
-## 📝 License
+## 📜 License
 
-This project is open source and free to use under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 🌟 Acknowledgments
+
+- 🙏 Inspired by this [youtube video](https://www.youtube.com/watch?v=F3J3PZj0zi0&t=1s)
+
+Thank You

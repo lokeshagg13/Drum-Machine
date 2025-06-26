@@ -1,4 +1,4 @@
-const constants = {
+const config = {
   MAX_BEATS: 30,
   MIN_BEATS: 2,
   DEFAULT_BEATS: 8,
@@ -18,4 +18,4 @@ const constants = {
   INSTRUMENTS: ['Hi Hat', 'Snare', 'Bass Drum', 'Crash', 'Clap', 'Floor Tom']
 };
 
-export default constants;
+export default config;
