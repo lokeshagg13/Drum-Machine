@@ -1,0 +1,85 @@
+.instrument {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: space-between;
+  background-color: #e0e0e0;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-right: 4px solid #017371;
+}
+
+.instrument:hover {
+  background-color: #017371;
+  color: white;
+  transform: scale(1.02);
+}
+
+.instrument.enabled {
+  background-color: #7fffd4;
+  color: #000;
+}
+
+.instrument.disabled {
+  background-color: #aaa;
+  color: #fff;
+}
+
+.instrument-name {
+  font-size: 1rem;
+  font-weight: 600;
+  flex: 1;
+  text-align: left;
+  margin-right: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.instrument-image img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .instrument {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: auto;
+    padding: 0.5rem;
+  }
+
+  .instrument-name {
+    margin: 0.5rem 0 0;
+    text-wrap: auto;
+    text-align: center;
+  }
+
+  .instrument-image img {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (min-width: 547px) and (max-width: 768px) {
+  .instrument-name {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 546px) {
+  .instrument-name {
+    font-size: 0.5rem;
+    margin-bottom: 1rem;
+  }
+}
+

@@ -1,0 +1,41 @@
+.grid-panel {
+  display: grid;
+  width: 80%;
+  min-height: 60vh;
+  row-gap: 0.4rem;
+  column-gap: 1px;
+}
+
+.grid-cell {
+  border: 1px solid;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  border-right: 4px solid #017371;
+}
+
+.grid-cell.disabled {
+  background-color: gray;
+  cursor: default;
+  border-right: 4px solid #010;
+}
+
+.grid-cell.selected {
+  background-color: lightgreen;
+  cursor: pointer;
+}
+
+.grid-cell.unselected {
+  background-color: white;
+  cursor: pointer;
+}
+
+.grid-cell.playing {
+  background-color: green;
+  cursor: pointer;
+}
+
+.grid-cell.current {
+  background-color: yellow;
+  cursor: default;
+}

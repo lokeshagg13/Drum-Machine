@@ -1,0 +1,52 @@
+.save-beat-modal .modal-header {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  text-align: center;
+  padding: 1rem 0.5rem;
+}
+
+.save-beat-modal .modal-header h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #38015c;
+}
+
+.save-beat-modal .closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #888;
+}
+
+.save-beat-modal .control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+  padding: 0 1rem;
+  gap: 0.5rem;
+}
+
+.save-beat-modal .control label {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #444;
+}
+
+.save-beat-modal .control input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.save-beat-modal .control input:focus {
+  border-color: #5c1d91;
+}

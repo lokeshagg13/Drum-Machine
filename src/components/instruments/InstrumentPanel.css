@@ -1,0 +1,14 @@
+.instrument-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 250px;
+  gap: 0.4rem;
+}
+
+/* On small screens, show horizontally with scroll */
+@media (max-width: 768px) {
+  .instrument-panel {
+    width: 25%;
+  }
+}

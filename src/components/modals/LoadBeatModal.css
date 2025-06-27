@@ -1,0 +1,93 @@
+.load-beat-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  padding: 1rem 0.5rem;
+}
+
+.load-beat-modal .modal-header h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #38015c;
+}
+
+.load-beat-modal .closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #888;
+}
+
+.load-beat-modal .hor-line {
+  color: #eee;
+  opacity: 1;
+  margin: 1rem 0.5rem;
+}
+
+.load-beat-modal .section {
+  padding: 0 0.5rem;
+}
+
+.load-beat-modal h4,
+.load-beat-modal p.section-desc {
+  text-align: left;
+}
+
+.load-beat-modal h4,
+.load-beat-modal p.section-desc {
+  font-size: 1.2rem;
+  color: #38015c;
+  margin-bottom: 0.3rem;
+}
+
+.load-beat-modal p.section-desc {
+  font-size: 0.8rem;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.load-beat-modal .file-upload-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.load-beat-modal .file-upload-label {
+  background: #eee;
+  color: black;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #888;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.load-beat-modal .file-upload-label:hover {
+  background-color: #eef;
+}
+
+.load-beat-modal input[type="file"] {
+  display: none;
+}
+
+.load-beat-modal .file-name {
+  margin-left: 1rem;
+  font-size: 0.95rem;
+  color: #333;
+  font-style: italic;
+}
+
+.load-beat-modal .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  margin-top: 1rem;
+}

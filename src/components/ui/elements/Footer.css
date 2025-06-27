@@ -1,0 +1,21 @@
+.footer {
+    background: white;
+    padding: 1rem;
+    width: 100%;
+    position: relative;
+  }
+
+  .footer-content {
+    text-align: center;
+    width: 100%;
+  }
+
+  .footer-text {
+    font-size: 0.875rem;
+    text-align: center;
+    color: black;
+  }
+
+  .footer-name {
+    color: #6e03f1;
+  }
